@@ -1,22 +1,25 @@
 // SPDX-License-Identifier: GLP-3.0
 pragma solidity 0.8.16;
 
-
 // Yul has for loops and if statements
 contract IsPrime {
     function isPrime(uint256 x) public pure returns (bool p) {
         p = true;
         assembly {
-            let halfX := add(div(x,2), 1)
-            for { let i := 2} lt(i, halfX) {i := add(i, 1)}
-            {
-                if iszero(mod(x,i)) {
+            let halfX := add(div(x, 2), 1)
+            for {
+                let i := 2
+            } lt(i, halfX) {
+                i := add(i, 1)
+            } {
+                if iszero(mod(x, i)) {
                     p := 0
-                    break 
+                    break
                 }
             }
         }
     }
+
     function testPrime() external pure {
         require(isPrime(2));
         require(isPrime(3));
@@ -55,7 +58,7 @@ contract IfComparison {
                 result := 2
             }
         }
-        return  result;
+        return result;
     }
 
     function bitFlip() external pure returns (bytes32 result) {
@@ -63,6 +66,7 @@ contract IfComparison {
             result := not(2) // 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
         }
     }
+
     function unsafeNegation() external pure returns (uint256 result) {
         result = 1;
         assembly {
@@ -72,6 +76,7 @@ contract IfComparison {
         }
         return result; // returns 2
     }
+
     function safeNegation() external pure returns (uint256 result) {
         result = 1;
         assembly {
@@ -81,18 +86,19 @@ contract IfComparison {
         }
         return result;
     }
+
     // there is no else statement, you. have to check for each senario
     function max(uint256 x, uint256 y) external pure returns (uint256 maximum) {
         assembly {
-            if lt(x,y) {
+            if lt(x, y) {
                 maximum := y
             }
-            if iszero(lt(x,y)) {
+            if iszero(lt(x, y)) {
                 maximum := x
             }
         }
     }
-    
+
     // The rest:
     /* 
     |solidity | yul      |

@@ -18,18 +18,18 @@ contract YulTypes {
             x := 0xa
         }
         return x;
-    }   
+    }
 
     // 1. Strings are not naturaly bytes32
     // 2. You can'n do this
     //    string memory mySrting = "";
-    //    assembly { myString = "Hello World" } 
+    //    assembly { myString = "Hello World" }
     // 3. You cant assign a string to a memory pointer
     // 4. To it correctly you need to use bytes32, memory is accessed with bytes32
     function getString() external pure returns (string memory) {
-        bytes32 myString = '';
+        bytes32 myString = "";
         assembly {
-            myString := "Hello World" // this assumes values has only fit 32 bytes
+            myString := "Hello World" // this assumes values has only fits 32 bytes
         }
         // return myString; // uncomment to use `returns (bytes32)`
         return string(abi.encode(myString)); // this `returns (string memory)`

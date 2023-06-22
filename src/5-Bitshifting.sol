@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GLP-3.0
 pragma solidity 0.8.16;
 
-contract StorageBasics {
+contract BitshiftingBasics {
     uint128 public C = 4;
     uint96 public D = 6;
     uint16 public E = 8;
@@ -17,7 +17,7 @@ contract StorageBasics {
         assembly {
             slot := E.slot // 0  sload(0) = 0x0001000800000000000000000000000600000000000000000000000000000004
             offset := E.offset // 28 we must shift 28 bytes to the left
-        }  
+        }
     }
 
     function readE() external view returns (uint256 e) {
@@ -25,7 +25,7 @@ contract StorageBasics {
             let value := sload(E.slot)
             // E.slot is 28 bytes
             // shr takes bits, not bytes, so we need to multiply by 8
-            let shifted := shr(mul(E.offset, 8), value) 
+            let shifted := shr(mul(E.offset, 8), value)
             // 0x00010008 = 0x0000000000000000000000000000000000000000000000000000000000010008
             // 0xffffffff = 0x000000000000000000000000000000000000000000000000000000000000ffff
             e := and(0xffff, shifted)
@@ -41,7 +41,10 @@ contract StorageBasics {
 
             // e.g division 0x5500 / 0x10 => 0x550
             // shift right by 224 = divide by 2 **224, below is 2**224 in hex
-            let shifted := div(value, 0x100000000000000000000000000000000000000000000000000000000)
+            let shifted := div(
+                value,
+                0x100000000000000000000000000000000000000000000000000000000
+            )
             e := and(0xffff, shifted)
         }
     }
@@ -58,7 +61,10 @@ contract StorageBasics {
 
         assembly {
             let c := sload(E.slot)
-            let clearedE := and(c, 0xffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
+            let clearedE := and(
+                c,
+                0xffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+            )
             // mask       = 0xffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
             // c          = 0x0001000800000000000000000000000600000000000000000000000000000004
             // cleardE    = 0x0001000000000000000000000000000600000000000000000000000000000004
@@ -70,4 +76,4 @@ contract StorageBasics {
             sstore(C.slot, newVal)
         }
     }
- }
+}

@@ -52,6 +52,12 @@ contract StorageComplex {
         }
     }
 
+    function readSmallArray() external view returns (uint256 ret) {
+        assembly {
+            ret := sload(smallArray.slot)
+        }
+    }
+
     function readSmallArrayLocation(
         uint256 index
     ) external view returns (bytes32 ret) {

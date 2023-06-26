@@ -41,10 +41,7 @@ contract BitshiftingBasics {
 
             // e.g division 0x5500 / 0x10 => 0x550
             // shift right by 224 = divide by 2 **224, below is 2**224 in hex
-            let shifted := div(
-                value,
-                0x100000000000000000000000000000000000000000000000000000000
-            )
+            let shifted := div(value, 0x100000000000000000000000000000000000000000000000000000000)
             e := and(0xffff, shifted)
         }
     }
@@ -61,10 +58,7 @@ contract BitshiftingBasics {
 
         assembly {
             let c := sload(E.slot)
-            let clearedE := and(
-                c,
-                0xffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-            )
+            let clearedE := and(c, 0xffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
             // mask       = 0xffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
             // c          = 0x0001000800000000000000000000000600000000000000000000000000000004
             // cleardE    = 0x0001000000000000000000000000000600000000000000000000000000000004

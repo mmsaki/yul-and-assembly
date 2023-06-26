@@ -30,17 +30,11 @@ contract ReturnTest is Test {
 
     function testHashV1() public {
         bytes32 hash = ret.hashv1();
-        assertEq(
-            hash,
-            0x6e0c627900b24bd432fe7b1f713f1b0744091a646a9fe4a65a18dfed21f2949c
-        );
+        assertEq(hash, 0x6e0c627900b24bd432fe7b1f713f1b0744091a646a9fe4a65a18dfed21f2949c);
     }
 
     function testHashV2() public {
         bytes32 hash = ret.hashV2();
-        assertEq(
-            hash,
-            0x6e0c627900b24bd432fe7b1f713f1b0744091a646a9fe4a65a18dfed21f2949c
-        );
+        assertEq(hash, 0x6e0c627900b24bd432fe7b1f713f1b0744091a646a9fe4a65a18dfed21f2949c);
     }
 }

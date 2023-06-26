@@ -12,10 +12,7 @@ contract BitShiftingTest is Test {
     }
 
     function testReadBySlot() public {
-        assertEq(
-            bs.readBySlot(0),
-            0x0001000800000000000000000000000600000000000000000000000000000004
-        );
+        assertEq(bs.readBySlot(0), 0x0001000800000000000000000000000600000000000000000000000000000004);
     }
 
     function testGetOffset() public {

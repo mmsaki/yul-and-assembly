@@ -7,11 +7,7 @@ contract IsPrime {
         p = true;
         assembly {
             let halfX := add(div(x, 2), 1)
-            for {
-                let i := 2
-            } lt(i, halfX) {
-                i := add(i, 1)
-            } {
+            for { let i := 2 } lt(i, halfX) { i := add(i, 1) } {
                 if iszero(mod(x, i)) {
                     p := 0
                     break
@@ -34,9 +30,7 @@ contract IfComparison {
     function isTruthy() external pure returns (uint256 result) {
         result = 2;
         assembly {
-            if 2 {
-                result := 1
-            }
+            if 2 { result := 1 }
         }
         return result;
     }
@@ -44,9 +38,7 @@ contract IfComparison {
     function isFalsy() external pure returns (uint256 result) {
         result = 1;
         assembly {
-            if 0 {
-                result := 2
-            }
+            if 0 { result := 2 }
         }
         return result;
     }
@@ -54,9 +46,7 @@ contract IfComparison {
     function negation() external pure returns (uint256 result) {
         result = 1;
         assembly {
-            if iszero(0) {
-                result := 2
-            }
+            if iszero(0) { result := 2 }
         }
         return result;
     }
@@ -70,9 +60,7 @@ contract IfComparison {
     function unsafeNegation() external pure returns (uint256 result) {
         result = 1;
         assembly {
-            if not(0) {
-                result := 2
-            }
+            if not(0) { result := 2 }
         }
         return result; // returns 2
     }
@@ -80,9 +68,7 @@ contract IfComparison {
     function safeNegation() external pure returns (uint256 result) {
         result = 1;
         assembly {
-            if iszero(2) {
-                result := 2
-            }
+            if iszero(2) { result := 2 }
         }
         return result;
     }
@@ -90,12 +76,8 @@ contract IfComparison {
     // there is no else statement, you. have to check for each senario
     function max(uint256 x, uint256 y) external pure returns (uint256 maximum) {
         assembly {
-            if lt(x, y) {
-                maximum := y
-            }
-            if iszero(lt(x, y)) {
-                maximum := x
-            }
+            if lt(x, y) { maximum := y }
+            if iszero(lt(x, y)) { maximum := x }
         }
     }
 

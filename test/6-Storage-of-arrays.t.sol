@@ -33,10 +33,7 @@ contract StorageComplexTest is Test {
     }
 
     function testReadSmallArrayLocation() public {
-        assertEq(
-            sto.readSmallArrayLocation(0),
-            0x0000000000000000000000000000000000000000000000000000000000030201
-        );
+        assertEq(sto.readSmallArrayLocation(0), 0x0000000000000000000000000000000000000000000000000000000000030201);
     }
 
     function testGetMapping() public {

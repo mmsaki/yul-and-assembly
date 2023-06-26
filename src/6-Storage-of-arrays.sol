@@ -19,11 +19,7 @@ contract StorageComplex {
         myMapping[11] = 6;
         nestedMapping[2][4] = 7;
 
-        addressToList[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = [
-            42,
-            1337,
-            777
-        ];
+        addressToList[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = [42, 1337, 777];
     }
 
     function fixedArrayView(uint256 index) external view returns (uint256 ret) {
@@ -38,9 +34,7 @@ contract StorageComplex {
         }
     }
 
-    function readBigArrayLocation(
-        uint256 index
-    ) external view returns (uint256 ret) {
+    function readBigArrayLocation(uint256 index) external view returns (uint256 ret) {
         uint256 slot;
         assembly {
             slot := bigArray.slot
@@ -58,9 +52,7 @@ contract StorageComplex {
         }
     }
 
-    function readSmallArrayLocation(
-        uint256 index
-    ) external view returns (bytes32 ret) {
+    function readSmallArrayLocation(uint256 index) external view returns (bytes32 ret) {
         uint256 slot;
         assembly {
             slot := smallArray.slot
@@ -89,12 +81,7 @@ contract StorageComplex {
         assembly {
             slot := nestedMapping.slot
         }
-        bytes32 location = keccak256(
-            abi.encode(
-                uint256(4),
-                keccak256((abi.encode(uint256(2), uint256(slot))))
-            )
-        );
+        bytes32 location = keccak256(abi.encode(uint256(4), keccak256((abi.encode(uint256(2), uint256(slot))))));
         assembly {
             ret := sload(location)
         }
@@ -106,34 +93,21 @@ contract StorageComplex {
             addressToListSlot := addressToList.slot
         }
 
-        bytes32 loaction = keccak256(
-            abi.encode(
-                address(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4),
-                uint256(addressToListSlot)
-            )
-        );
+        bytes32 loaction =
+            keccak256(abi.encode(address(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4), uint256(addressToListSlot)));
         assembly {
             ret := sload(loaction)
         }
     }
 
-    function getAddressToList(
-        uint256 index
-    ) external view returns (uint256 ret) {
+    function getAddressToList(uint256 index) external view returns (uint256 ret) {
         uint256 slot;
         assembly {
             slot := addressToList.slot
         }
 
         bytes32 location = keccak256(
-            abi.encode(
-                keccak256(
-                    abi.encode(
-                        address(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4),
-                        uint256(slot)
-                    )
-                )
-            )
+            abi.encode(keccak256(abi.encode(address(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4), uint256(slot))))
         );
 
         assembly {

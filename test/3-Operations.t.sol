@@ -24,10 +24,7 @@ contract OperationsTest is Test {
     }
 
     function testBitFlip() public {
-        assertEq(
-            comparison.bitFlip(),
-            0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
-        );
+        assertEq(comparison.bitFlip(), 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd);
     }
 
     function testSafeNegation() public {

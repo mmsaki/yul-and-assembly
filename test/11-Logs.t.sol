@@ -35,10 +35,7 @@ contract LogsTest is Test {
 
     function testV2EmitLog() public {
         vm.expectEmit(true, true, true, true);
-        emit SomeLog2(
-            0x0000000000000000000000000000000000000000000000000000000000000005,
-            true
-        );
+        emit SomeLog2(0x0000000000000000000000000000000000000000000000000000000000000005, true);
         lg.v2EmitLog();
     }
 

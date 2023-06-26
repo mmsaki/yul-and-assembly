@@ -21,7 +21,7 @@ contract Memory {
     event MemoryPointer(bytes32);
     event MemoryPointerMsize(bytes32, bytes32);
 
-    function highAcess() external pure returns (uint ret) {
+    function highAcess() external pure returns (uint256 ret) {
         assembly {
             ret := mload(0xffffffffffffffff)
         }
@@ -41,10 +41,7 @@ contract Memory {
         }
     }
 
-    function memPointer()
-        external
-        returns (bytes32 x40before, bytes32 x40after)
-    {
+    function memPointer() external returns (bytes32 x40before, bytes32 x40after) {
         assembly {
             x40before := mload(0x40)
         }
@@ -60,12 +57,7 @@ contract Memory {
 
     function memPointerV2()
         external
-        returns (
-            bytes32 x40before,
-            bytes32 msizeBefore,
-            bytes32 x40after,
-            bytes32 msizeAfter
-        )
+        returns (bytes32 x40before, bytes32 msizeBefore, bytes32 x40after, bytes32 msizeAfter)
     {
         assembly {
             x40before := mload(0x40)
@@ -83,11 +75,7 @@ contract Memory {
         emit MemoryPointerMsize(x40after, msizeAfter);
     }
 
-    function fixedArray()
-        external
-        pure
-        returns (bytes32 x40Before, bytes32 x40After)
-    {
+    function fixedArray() external pure returns (bytes32 x40Before, bytes32 x40After) {
         assembly {
             x40Before := mload(0x40)
         }
@@ -98,10 +86,7 @@ contract Memory {
         }
     }
 
-    function abiEncode()
-        external
-        returns (bytes32 x40Before, bytes32 x40After)
-    {
+    function abiEncode() external returns (bytes32 x40Before, bytes32 x40After) {
         assembly {
             x40Before := mload(0x40)
         }
@@ -116,10 +101,7 @@ contract Memory {
         emit MemoryPointer(x40After);
     }
 
-    function abiEncodePacked()
-        external
-        returns (bytes32 x40Before, bytes32 x40After)
-    {
+    function abiEncodePacked() external returns (bytes32 x40Before, bytes32 x40After) {
         assembly {
             x40Before := mload(0x40)
         }
@@ -135,18 +117,10 @@ contract Memory {
 
     event Debug(bytes32, bytes32, bytes32, bytes32);
 
-    function args(
-        uint8[4] memory arr
-    )
+    function args(uint8[4] memory arr)
         external
         pure
-        returns (
-            bytes32 location,
-            bytes32 index0,
-            bytes32 index1,
-            bytes32 index2,
-            bytes32 index3
-        )
+        returns (bytes32 location, bytes32 index0, bytes32 index1, bytes32 index2, bytes32 index3)
     {
         assembly {
             location := arr
@@ -158,9 +132,7 @@ contract Memory {
         // emit Debug(location, len, valueAtIndex0, valueAtIndex1);
     }
 
-    function breakFreeMemoryPointer(
-        uint256[1] memory val
-    ) external pure returns (uint256) {
+    function breakFreeMemoryPointer(uint256[1] memory val) external pure returns (uint256) {
         assembly {
             mstore(0x40, 0x80)
         }
@@ -175,13 +147,7 @@ contract Memory {
     function unpacked()
         external
         view
-        returns (
-            bytes32 pointer,
-            bytes32 len,
-            bytes32 index0,
-            bytes32 index1,
-            bytes32 index2
-        )
+        returns (bytes32 pointer, bytes32 len, bytes32 index0, bytes32 index1, bytes32 index2)
     {
         bytes32 ptr;
         assembly {

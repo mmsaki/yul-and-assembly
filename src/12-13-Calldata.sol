@@ -31,7 +31,9 @@ contract OtherContract {
         arr = data;
     }
 
-    function returnVaribaleLength(uint256 len) external pure returns (bytes memory) {
+    function returnVaribaleLength(
+        uint256 len
+    ) external pure returns (bytes memory) {
         bytes memory ret = new bytes(len);
         for (uint256 i = 0; i < ret.length; i++) {
             ret[i] = 0xab;
@@ -50,7 +52,9 @@ contract Contract {
             //                                                         28     32
             let success := staticcall(gas(), _a, 28, 32, 0x00, 0x20)
 
-            if iszero(success) { revert(0, 0) }
+            if iszero(success) {
+                revert(0, 0)
+            }
             return(0x00, 0x20)
         }
     }
@@ -72,8 +76,17 @@ contract Contract {
             mstore(add(mptr, 0x20), 3)
             mstore(add(mptr, 0x40), 11)
             mstore(0x40, add(mptr, 0x60)) // update mempry pointer `3 x 32` = 0x60
-            let success := staticcall(gas(), _a, add(odlMptr, 28), mload(0x40), 0x00, 0x20)
-            if iszero(success) { revert(0, 0) }
+            let success := staticcall(
+                gas(),
+                _a,
+                add(odlMptr, 28),
+                mload(0x40),
+                0x00,
+                0x20
+            )
+            if iszero(success) {
+                revert(0, 0)
+            }
 
             result := mload(0x00)
         }
@@ -84,20 +97,35 @@ contract Contract {
             // 0x4018d9aa is signature for "setX()"
             mstore(0x00, 0x4018d9aa)
             mstore(0x20, 999)
-            let success := call(gas(), _a, callvalue(), 28, add(28, 32), 0x00, 0x00)
+            let success := call(
+                gas(),
+                _a,
+                callvalue(),
+                28,
+                add(28, 32),
+                0x00,
+                0x00
+            )
 
-            if iszero(success) { revert(0, 0) }
+            if iszero(success) {
+                revert(0, 0)
+            }
         }
     }
 
-    function returnUnknownSize(address _a, uint256 amount) external view returns (bytes memory) {
+    function returnUnknownSize(
+        address _a,
+        uint256 amount
+    ) external view returns (bytes memory) {
         assembly {
             // 0xb0a3f202 is signature for "returnVaribaleLength(uint256)"
             mstore(0x00, 0xd3ef80d2)
             mstore(0x20, amount)
 
             let success := staticcall(gas(), _a, 28, add(28, 32), 0x00, 0x00)
-            if iszero(success) { revert(0, 0) }
+            if iszero(success) {
+                revert(0, 0)
+            }
 
             returndatacopy(0, 0, returndatasize())
             return(0, returndatasize())

@@ -9,7 +9,7 @@ contract LogsTest is Test {
     Logs public lg;
 
     event SomeLog(uint256 indexed a, uint256 indexed b);
-    event SomeLog2(uint256 indexed a, bool);
+    event SomeLog2(uint256 indexed a, bytes32 boolean);
 
     function setUp() public {
         lg = new Logs();
@@ -33,19 +33,23 @@ contract LogsTest is Test {
         lg.yulEmitLog();
     }
 
+    // TODO: Why does not emit?
     function testV2EmitLog() public {
         vm.expectEmit(true, true, true, true);
-        emit SomeLog2(0x0000000000000000000000000000000000000000000000000000000000000005, true);
+        emit SomeLog2(
+            0x0000000000000000000000000000000000000000000000000000000000000005,
+            0x0000000000000000000000000000000000000000000000000000000000000001
+        );
         lg.v2EmitLog();
     }
 
-    // TODO: Why does this revert?
-    // function testV2YulEmitLog() public {
-    //     vm.expectEmit(true, true, true, true);
-    //     emit SomeLog2(
-    //         0x0000000000000000000000000000000000000000000000000000000000000005,
-    //         true
-    //     );
-    //     lg.v2YulEmitLog();
-    // }
+    // TODO: Why does not emit?
+    function testV2YulEmitLog() public {
+        vm.expectEmit(true, true, true, true);
+        emit SomeLog2(
+            0x0000000000000000000000000000000000000000000000000000000000000005,
+            0x0000000000000000000000000000000000000000000000000000000000000001
+        );
+        lg.v2YulEmitLog();
+    }
 }

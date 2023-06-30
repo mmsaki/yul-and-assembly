@@ -8,6 +8,7 @@ contract DynamicLengthTest is Test {
     DynamicLength public dynamic;
     uint256[] vals;
     uint256[] vals2;
+    uint256[] vals3;
 
     event ThreeArgs(
         bytes32 indexed a,
@@ -30,6 +31,12 @@ contract DynamicLengthTest is Test {
         bytes32 d1,
         bytes32 d2,
         bytes32 e
+    );
+
+    event AllDynamic(
+        bytes32 indexed a_ptr,
+        bytes32 indexed b_ptr,
+        bytes32 indexed c_ptr
     );
 
     event OneArg(
@@ -105,6 +112,30 @@ contract DynamicLengthTest is Test {
         vals2.push(uint(12));
 
         dynamic.fiveArgs(5, vals, 7, vals2, 9);
+    }
+
+    function testAllDynamic() public {
+        vm.expectEmit(true, true, true, true);
+
+        emit AllDynamic(
+            0x0000000000000000000000000000000000000000000000000000000000000060,
+            0x00000000000000000000000000000000000000000000000000000000000000c0,
+            0x0000000000000000000000000000000000000000000000000000000000000140
+        );
+
+        vals.push(uint(1));
+        vals.push(uint(2));
+
+        vals2.push(uint(3));
+        vals2.push(uint(4));
+        vals2.push(uint(5));
+
+        vals3.push(uint(6));
+        vals3.push(uint(7));
+        vals3.push(uint(8));
+        vals3.push(uint(9));
+
+        dynamic.allDynamic(vals, vals2, vals3);
     }
 
     function testOneArg() public {

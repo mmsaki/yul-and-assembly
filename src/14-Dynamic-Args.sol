@@ -145,9 +145,36 @@ contract DynamicLength {
         emit OneArg(a_loc, a_len, a0, a1, a2);
     }
 
+    event AllDynamic(
+        bytes32 indexed a_ptr,
+        bytes32 indexed b_ptr,
+        bytes32 indexed c_ptr
+    );
+
     function allDynamic(
         uint256[] calldata a,
         uint256[] calldata b,
         uint256[] calldata c
-    ) external {}
+    ) external {
+        bytes32 a_loc;
+        bytes32 b_loc;
+        bytes32 c_loc;
+        bytes32 a0;
+        bytes32 a1;
+        bytes32 b0;
+        bytes32 b1;
+        bytes32 b2;
+        bytes32 c0;
+        bytes32 c1;
+        bytes32 c2;
+        bytes32 c3;
+        assembly {
+            let offset := 0x04
+            a_loc := calldataload(add(offset, 0x00))
+            b_loc := calldataload(add(offset, 0x20))
+            c_loc := calldataload(add(offset, 0x40))
+        }
+
+        emit AllDynamic(a_loc, b_loc, c_loc);
+    }
 }
